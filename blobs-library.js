@@ -13,7 +13,7 @@
 */
 
 // Creates a Blob with x, y, r and color values
-function newBlob(initX, initY, initR, initColor, xspeed, yspeed, energey) {
+function newBlob(initX, initY, initR, initColor, xspeed, yspeed, energey, hunger) {
     return {
         x: initX,
         y: initY,
@@ -21,7 +21,8 @@ function newBlob(initX, initY, initR, initColor, xspeed, yspeed, energey) {
         color: initColor,
         XS: xspeed,
         YS: yspeed, 
-        E: energey
+        E: energey,
+        H: hunger
     }
 }
 
@@ -48,7 +49,7 @@ function createRandomBlobArray(num) {
 function createBlobArray(num) {
     let temp = [];
     for (let n = 1; n <= num; n++) {
-        temp.push(newBlob(randomInt(15, cnv.width - 15), 50, 10, "blue", randomDec(-7.0, 7.0), randomDec(7.0, 7.0), 5000));
+        temp.push(newBlob(randomInt(15, cnv.width - 15), 50, 10, "blue", randomDec(-7.0, 7.0), randomDec(1.0, 7.0), 5000, 0));
     }
     return temp;
 }
