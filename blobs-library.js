@@ -13,14 +13,13 @@
 */
 
 // Creates a Blob with x, y, r and color values
-function newBlob(initX, initY, initR, initColor, xspeed, yspeed, energey, hunger) {
+function newBlob(initX, initY, initR, initColor, maxSpeed, energey, hunger) {
     return {
         x: initX,
         y: initY,
         r: initR,
         color: initColor,
-        XS: xspeed,
-        YS: yspeed, 
+        MS: maxSpeed,
         E: energey,
         H: hunger
     }
@@ -49,7 +48,7 @@ function createRandomBlobArray(num) {
 function createBlobArray(num) {
     let temp = [];
     for (let n = 1; n <= num; n++) {
-        temp.push(newBlob(randomInt(15, cnv.width - 15), 50, 10, "blue", randomDec(-7.0, 7.0), randomDec(1.0, 7.0), 5000, 0));
+        temp.push(newBlob(randomInt(15, cnv.width - 15), 50, 10, "blue", 1, 5000, 0));
     }
     return temp;
 }
@@ -67,6 +66,8 @@ function moveBlobRandom(aBlob, xSpeed1, xSpeed2, ySpeed1, ySpeed2) {
 }
 
 function moveBlob(aBlob) {
-    aBlob.x += aBlob.XS;
-    aBlob.y += aBlob.YS;
+    let foodDisX = calculateDistance("x", aBlob);
+    let foodDisY = calculateDistance("y", aBlob);
+    aBlob.x += calculateMovement(foodDisX, foodDisY, aBlob, "x");
+    aBlob.y += calculateMovement(foodDisX, foodDisY, aBlob, "y");
 }

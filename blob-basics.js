@@ -1,30 +1,7 @@
 
 function wasteEnergy(i) {
-    if (Blobs[i].XS < 0) {
-        if (Blobs[i].YS < 0) {
-            let xCost = Math.pow(Blobs[i].XS * -1, 2);
-            let yCost = Math.pow(Blobs[i].YS * -1, 2);
-            let cost = xCost + yCost;
-            Blobs[i].E -= cost;
-        } else {
-            let xCost = Math.pow(Blobs[i].XS * -1, 2);
-            let yCost = Math.pow(Blobs[i].YS, 2);
-            let cost = xCost + yCost;
-            Blobs[i].E -= cost;
-        }
-    } else {
-        if (Blobs[i].YS < 0) {
-            let xCost = Math.pow(Blobs[i].XS, 2);
-            let yCost = Math.pow(Blobs[i].YS * -1, 2);
-            let cost = xCost + yCost;
-            Blobs[i].E -= cost;
-        } else {
-            let xCost = Math.pow(Blobs[i].XS, 2);
-            let yCost = Math.pow(Blobs[i].YS, 2);
-            let cost = xCost + yCost;
-            Blobs[i].E -= cost;
-        }
-    }
+    let cost = Math.pow(Blobs[i].MS, 2)
+    Blobs[i].E -= cost;
 }
 
 function eat(i) {
@@ -60,6 +37,9 @@ function eat(i) {
 function tiredTest() {
     let tired = 0;
     for (let a = 0; a < Blobs.length; a++) {
+        if (Blobs[a].H > 1) {
+            Blobs[a].E = 0;
+        }
         if (Blobs[a].E <= 0) {
             tired++;
         }
@@ -70,8 +50,9 @@ function tiredTest() {
         if (newBlobs > 0) {
             let output = newBlobs + count;
             for (let b = count; b < output; b++) {
-                Blobs.push(newBlob(randomInt(15, cnv.width - 15), 50, 10, "blue", randomDec(-7.0, 7.0), randomDec(1.0, 7.0), 5000, 0));
+                Blobs.push(newBlob(randomInt(15, cnv.width - 15), 50, 10, "blue", randomDec(-7.0, 7.0), 1, 5000, 0));
             }
+        console.log(Blobs.length);
         }
     }
 }
