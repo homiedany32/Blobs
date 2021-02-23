@@ -23,8 +23,8 @@ function newFood(initX, initY, initR, initColor) {
 // Creates a Food with random properties
 function newRandomFood() {
     return {
-        x: randomInt(0, cnv.width),
-        y: randomInt(0, cnv.height),
+        x: randomInt(10, cnv.width - 10),
+        y: randomInt(10, cnv.height - 10),
         r: randomInt(5, 35),
         color: randomRGB()
     }
@@ -43,7 +43,7 @@ function createRandomFoodArray(num) {
 function createFoodArray(num) {
     let temp = [];
     for (let n = 1; n <= num; n++) {
-        temp.push(newFood(randomInt(0,cnv.width), randomInt(150,cnv.height), 5, "green"));
+        temp.push(newFood(randomInt(10, cnv.width - 10), randomInt(150,cnv.height - 10), 2.5, "green"));
     }
     return temp;
 }

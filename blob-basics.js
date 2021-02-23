@@ -1,6 +1,9 @@
 
 function wasteEnergy(i) {
-    let cost = Math.pow(Blobs[i].MS, 2)
+    let xcost = Math.pow(Blobs[i].XS, 2);
+    let ycost = Math.pow(Blobs[i].YS, 2);
+    let rcost = Blobs[i].r * 3;
+    let cost = xcost + ycost + rcost;
     Blobs[i].E -= cost;
 }
 
@@ -45,26 +48,29 @@ function tiredTest() {
         }
     }
     if (tired == Blobs.length) {
-        let count = Blobs.length
-        let newBlobs = reset();
-        if (newBlobs > 0) {
-            let output = newBlobs + count;
-            for (let b = count; b < output; b++) {
-                Blobs.push(newBlob(randomInt(15, cnv.width - 15), 50, 10, "blue", randomDec(-7.0, 7.0), 1, 5000, 0));
-            }
-        console.log(Blobs.length);
+        let newBlobValues = reset();
+        if (Blobs.length != 0) {
+            foodchanging();
         }
+        evolve(newBlobValues); // (the array of blobs evolving with the speed)
+        document.getElementById("stats").innerHTML = ("Blob count: " + Blobs.length + "<br> Food count: " + Food.length + "<br> Average Speed: " + avgSpeed() + "<br> Average Size: " + avgRadius());
     }
 }
 
 function reset() {
-    let num = 0;
+    let EnergyChange = document.getElementById('EnergyCount').value;
+    let Stat = [];
     for (let o = 0; o < Blobs.length; o++) {
         Blobs[o].y = 50;
+        if (Blobs[o].YS < 0) {
+            Blobs[o].YS = Blobs[o].YS * -1;
+        }
         if (Blobs[o].H > 0) {
-            Blobs[o].E = 5000;
+            Blobs[o].E = EnergyChange;
             if (Blobs[o].H > 1) {
-                num++;
+                let stemp = Blobs[o].YS;
+                let rtemp = Blobs[o].r;
+                Stat.push(createStatArray(stemp, rtemp))
             }
             Blobs[o].H = 0;
         } else {
@@ -72,14 +78,71 @@ function reset() {
             o--;
         }
     }
+    return Stat;
+}
+
+function foodchanging() {
+    let CT = document.getElementById("foodChange").value
+    let FCT = document.getElementById("foodChangeTotal").value
+    let FCA = document.getElementById("foodChangeAmount").value
+    if (CT == "Inc") {
+        if (Food.length < FCT) {
+            for (let gop = 0; gop < FCA; gop++) {
+                Food.push(newFood(randomInt(10, cnv.width - 10), randomInt(150,cnv.height - 10), 5, "green"));
+            }
+        }
+    } else if (CT == "Dec") {
+        if (Food.length > FCT) {
+            for (let gop = 0; gop < FCA; gop++) {
+                Food.pop()
+            }
+        }
+    }
     for (let n = 0; n < Food.length; n++) {
-        let newX = randomInt(0,cnv.width);
-        let newY = randomInt(150,cnv.height);
+        let newX = randomInt(10,cnv.width - 10);
+        let newY = randomInt(150,cnv.height - 10);
         Food[n].x = newX;
         Food[n].y = newY;
     }
-    if (Food.length > 30) {
-        Food.pop()
+}
+function restart() {
+    var SB = document.getElementById("StartBlob")
+    var SF = document.getElementById("StartFood")
+    Blobs = [];
+    Food = [];
+    for (let r = 0; r < SB.value; r++) {
+        Blobs.push(GB());
     }
-    return num;
+    for (let r = 0; r < SF.value; r++) {
+        Food.push(newFood(randomInt(0,cnv.width), randomInt(150,cnv.height), 2.5, "green"));
+    }
+    document.getElementById("stats").innerHTML = ("Blob count: " + Blobs.length + "<br> Food count: " + Food.length + "<br> Average Speed: " + avgSpeed() + "<br> Average Size: " + avgRadius());
+}
+function avgSpeed() {
+    let totalSpeed = 0;
+    for (let f = 0; f < Blobs.length; f++) {
+        if (Blobs[f].XS > 0) {
+            totalSpeed += (Blobs[f].YS + Blobs[f].XS)
+        } else {
+            totalSpeed += (Blobs[f].YS + (Blobs[f].XS) * -1)
+        }
+    }
+    totalSpeed = Math.floor(totalSpeed * 100);
+    totalSpeed = totalSpeed / 100;
+    let output = totalSpeed / Blobs.length
+    output = Math.floor(output * 100);
+    output = output / 100;
+    return output
+}
+function avgRadius() {
+    let totalRadius = 0;
+    for (let f = 0; f < Blobs.length; f++) {
+        totalRadius += Blobs[f].r
+    }
+    totalRadius = Math.floor(totalRadius * 100);
+    totalRadius = totalRadius / 100;
+    let output = totalRadius / Blobs.length
+    output = Math.floor(output * 100);
+    output = output / 100;
+    return output
 }

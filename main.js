@@ -1,7 +1,14 @@
 let Blobs = createBlobArray(1);
-let Food = createFoodArray(200);
+let Food = createFoodArray(500);
+let Stat = [];
 
 requestAnimationFrame(draw);
+
+function GB() {
+    let EnergyChange = document.getElementById('EnergyCount').value;
+    return newBlob(randomInt(15, cnv.width - 15), 50, 5, "blue", randomDec(-7.0, 7.0), 3.0, EnergyChange, 0)
+}
+
 function draw() {
     background("lightgreen")
     for (let o = 0; o < Food.length; o++) {
@@ -14,114 +21,26 @@ function draw() {
             wasteEnergy(i);
         }
         eat(i);
+        sidewalltest(i);
+        topwalltest(i);
     }
     tiredTest();
     requestAnimationFrame(draw);
 }
 
-
-function calculateDistance(type, i) {
-    if (type == "x") {
-        let put = 0;
-        let low = 10000;
-        let neg = 0;
-        let base = i.x;
-        for (let c = 0; c < Food.length; c++) {
-            let test = base - Food[c].x
-            if (test > 0) {
-                put = test * -1;
-                if (put < low) {
-                    low = put;
-                    neg = 1;
-                }
-            } else {
-                put = test;
-                if (put < low) {
-                    low = put;
-                    neg = 0;
-                }
-            }
-        }
-        if (neg = 1) {
-            let output = put * -1;
-            return output;
-        } else {
-            let output = put;
-            return output;
-        }
-    } else if (type == "y") {
-        let put = 0;
-        let low = 10000;
-        let neg = 0;
-        let base = i.y;
-        for (let c = 0; c < Food.length; c++) {
-            let test = base - Food[c].y
-            if (test > 0) {
-                put = test * -1;
-                if (put < low) {
-                    low = put;
-                    neg = 1;
-                }
-            } else {
-                put = test;
-                if (put < low) {
-                    low = put;
-                    neg = 0;
-                }
-            }
-        }
-        if (neg = 1) {
-            let output = put * -1;
-            return output;
-        } else {
-            let output = put;
-            return output;
-        }
-    }   
+function sidewalltest(i) {
+    let trueX = Blobs[i].x + Blobs[i].r
+    if (trueX > cnv.width) {
+        Blobs[i].XS = Blobs[i].XS * -1;
+    } else if (Blobs[i].x < Blobs[i].r) {
+        Blobs[i].XS = Blobs[i].XS * -1;
+    }
 }
-
-function calculateMovement(x, y, i, type) {
-    let x1 = x;
-    let y1 = y;
-    let x2 = i.x;
-    let y2 = i.y;
-    let xDis = x2 - x1;
-    let yDis = y2 - y1;
-    if (xDis < 0) {
-        xDis = xDis * -1;
-        xNeg = 1;
+function topwalltest(i) {
+    let trueY = Blobs[i].y + Blobs[i].r
+    if (trueY > cnv.height) {
+        Blobs[i].YS = Blobs[i].YS * -1;
+    } else if (Blobs[i].y < Blobs[i].r) {
+        Blobs[i].YS = Blobs[i].YS * -1;
     }
-    if (yDis < 0) {
-        yDis = yDis * -1;
-        yNeg = 1;
-    }
-    let xspeed = xDis / 100;
-    let yspeed = yDis / 100;
-    for (let n = 0; n < 0;) {
-        if (xspeed + yspeed == i.MS) {
-            if (xspeed + yspeed <= i.MS) {
-            n++;
-        } else if (xspeed + yspeed > i.MS) {
-            xspeed -= 0.01
-            yspeed -= 0.01
-        } else if (xspeed + yspeed < i.MS) {
-            xspeed += 0.01
-            yspeed += 0.01
-            }
-        }
-    }
-    if (type == "x") {
-        if (xNeg = 1) {
-            return xspeed;
-        } else {
-            return xspeed;
-        }
-    } else if (type == "y") {
-        if (yNeg = 1) {
-            return yspeed;
-        } else {
-            return yspeed;
-        }
-    }
-    
 }
