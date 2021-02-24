@@ -41,3 +41,31 @@ function evolveRad(ard) {
     }
     
 }
+function avgSpeed() {
+    let totalSpeed = 0;
+    for (let f = 0; f < Blobs.length; f++) {
+        if (Blobs[f].XS > 0) {
+            totalSpeed += (Blobs[f].YS + Blobs[f].XS)
+        } else {
+            totalSpeed += (Blobs[f].YS + (Blobs[f].XS) * -1)
+        }
+    }
+    totalSpeed = Math.floor(totalSpeed * 100);
+    totalSpeed = totalSpeed / 100;
+    let output = totalSpeed / Blobs.length
+    output = Math.floor(output * 100);
+    output = output / 100;
+    return output
+}
+function avgRadius() {
+    let totalRadius = 0;
+    for (let f = 0; f < Blobs.length; f++) {
+        totalRadius += Blobs[f].r
+    }
+    totalRadius = Math.floor(totalRadius * 100);
+    totalRadius = totalRadius / 100;
+    let output = totalRadius / Blobs.length
+    output = Math.floor(output * 100);
+    output = output / 100;
+    return output
+}

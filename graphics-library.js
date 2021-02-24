@@ -4,8 +4,10 @@
 // Main
 let cnv = document.getElementById("my-canvas");
 let ctx = cnv.getContext("2d");
-cnv.width = 1000;
-cnv.height = 600;
+let cnvW = document.getElementById("canvasW").value;
+let cnvH = document.getElementById("canvasH").value;
+cnv.width = cnvW;
+cnv.height = cnvH;
 
 /* Function List:
     modes:

@@ -65,8 +65,3 @@ function moveBlobRandom(aBlob, xSpeed1, xSpeed2, ySpeed1, ySpeed2) {
     aBlob.x += randomInt(xSpeed1, xSpeed2);
     aBlob.y += randomInt(ySpeed1, ySpeed2);
 }
-
-function moveBlob(aBlob) {
-    aBlob.x += aBlob.XS;
-    aBlob.y += aBlob.YS;
-}

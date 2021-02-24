@@ -6,7 +6,6 @@ function wasteEnergy(i) {
     let cost = xcost + ycost + rcost;
     Blobs[i].E -= cost;
 }
-
 function eat(i) {
     for (let a = 0; a < Food.length; a++) {
         let BX = Blobs[i].x + Blobs[i].r;
@@ -36,7 +35,6 @@ function eat(i) {
         }
     }
 }
-
 function tiredTest() {
     let tired = 0;
     for (let a = 0; a < Blobs.length; a++) {
@@ -56,7 +54,6 @@ function tiredTest() {
         document.getElementById("stats").innerHTML = ("Blob count: " + Blobs.length + "<br> Food count: " + Food.length + "<br> Average Speed: " + avgSpeed() + "<br> Average Size: " + avgRadius());
     }
 }
-
 function reset() {
     let EnergyChange = document.getElementById('EnergyCount').value;
     let Stat = [];
@@ -80,7 +77,6 @@ function reset() {
     }
     return Stat;
 }
-
 function foodchanging() {
     let CT = document.getElementById("foodChange").value
     let FCT = document.getElementById("foodChangeTotal").value
@@ -88,7 +84,7 @@ function foodchanging() {
     if (CT == "Inc") {
         if (Food.length < FCT) {
             for (let gop = 0; gop < FCA; gop++) {
-                Food.push(newFood(randomInt(10, cnv.width - 10), randomInt(150,cnv.height - 10), 5, "green"));
+                Food.push(newFood(randomInt(10, cnv.width - 10), randomInt(150,cnv.height - 10), 2.5, "green"));
             }
         }
     } else if (CT == "Dec") {
@@ -108,6 +104,10 @@ function foodchanging() {
 function restart() {
     var SB = document.getElementById("StartBlob")
     var SF = document.getElementById("StartFood")
+    let cnvW = document.getElementById("canvasW").value;
+    let cnvH = document.getElementById("canvasH").value;
+    cnv.width = cnvW;
+    cnv.height = cnvH;
     Blobs = [];
     Food = [];
     for (let r = 0; r < SB.value; r++) {
@@ -117,32 +117,4 @@ function restart() {
         Food.push(newFood(randomInt(0,cnv.width), randomInt(150,cnv.height), 2.5, "green"));
     }
     document.getElementById("stats").innerHTML = ("Blob count: " + Blobs.length + "<br> Food count: " + Food.length + "<br> Average Speed: " + avgSpeed() + "<br> Average Size: " + avgRadius());
-}
-function avgSpeed() {
-    let totalSpeed = 0;
-    for (let f = 0; f < Blobs.length; f++) {
-        if (Blobs[f].XS > 0) {
-            totalSpeed += (Blobs[f].YS + Blobs[f].XS)
-        } else {
-            totalSpeed += (Blobs[f].YS + (Blobs[f].XS) * -1)
-        }
-    }
-    totalSpeed = Math.floor(totalSpeed * 100);
-    totalSpeed = totalSpeed / 100;
-    let output = totalSpeed / Blobs.length
-    output = Math.floor(output * 100);
-    output = output / 100;
-    return output
-}
-function avgRadius() {
-    let totalRadius = 0;
-    for (let f = 0; f < Blobs.length; f++) {
-        totalRadius += Blobs[f].r
-    }
-    totalRadius = Math.floor(totalRadius * 100);
-    totalRadius = totalRadius / 100;
-    let output = totalRadius / Blobs.length
-    output = Math.floor(output * 100);
-    output = output / 100;
-    return output
 }
