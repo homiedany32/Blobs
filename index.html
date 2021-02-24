@@ -31,11 +31,12 @@
         they will run around to find and eat food until they run out of energy, if a blob ate two food they will immediately run out of energy
         and when the next generation occurs, this blob will survive and produce a new blob.  If a blob only eats one food and runs out of energy
         it'll only survive to the next day without producing a new blob.  If a blob doesn't eat a food when it runs out of energy it'll die when
-        the next generation occurs.  New generations occur when all of the blobs lose all of their energy, lost of energy is calculated by the X
-        to the power of two, plus the Y translation to the power of two, plus the size(radius) multiplied by 3.  Every new generation has a 50/50 chance
-        to mutate either their speed and/or their size to increase or decrease these values.  You can interact with certain values of the simulation, you
-        can adjust the: Starting blob count, Starting food count, Energy of the Blobs, Increasing/Decreasing the food count each generation and how much to
-        change it by.  You can also change the Width and Height of the simulation, but you need to hit the reset button
+        the next generation occurs.  New generations occur when all of the blobs lose all of their energy, lost of energy is calculated by the X translation
+        to the power of two, plus the Y translation to the power of two, plus the size(radius) multiplied by 3, all of these factors added together is how
+        much energy loss each blob loses per frame.  Every new generation has a 50/50 chance to mutate either their speed and/or their size to 
+        increase or decrease these values.  You can interact with certain values of the simulation, you can adjust the: Starting blob count, Starting food
+        count, Energy of the Blobs, Increasing/Decreasing the food count each generation and how much to change it by.  You can also change the Width 
+        and Height of the simulation, but you need to hit the reset button
     </p>
     <script src="graphics-library.js"></script>
     <script src="random-library.js"></script>
