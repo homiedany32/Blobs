@@ -1,4 +1,3 @@
-
 function evolvingStats(Speed, Radius) {
     return {
         s: Speed,
